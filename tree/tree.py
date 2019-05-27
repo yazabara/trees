@@ -22,10 +22,10 @@ class Tree:
         else:
             raise NodeNofFoundException()
 
-    def smart_print(self):
+    def print_tree_by_depths(self):
         print(self.__root)
         i = 1
         while i <= self.__depth:
-            NodeAlgorithms.print_by_depth(self.__root, i)
+            NodeAlgorithms.do_smth_by_depth(self.__root, i, NodeFunction(lambda node: print(node, end=' ')))
             print()
             i = i + 1

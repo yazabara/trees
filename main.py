@@ -20,5 +20,5 @@ if __name__ == '__main__':
         .add_node("12", lambda node: "6" == node.value)
     print(tree.get_size())
     print("---------- ||| ----------")
-    print(tree.smart_print())
+    print(tree.print_tree_by_depths())
 

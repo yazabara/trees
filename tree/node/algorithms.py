@@ -29,21 +29,23 @@ class NodeFunction(NodeAbstractFunc):
 class NodeAlgorithms:
 
     @staticmethod
-    def print_by_depth(node: Node, depth=1):
+    def do_smth_by_depth(node: Node, depth=1, do_func: NodeAbstractFunc = None):
         """
         Method goes through all nodes with rule:
         self node -> for each child in children [left -> right]
         :return: Node
         """
+        if not do_func:
+            return
 
         if node.depth == depth:
-            print(node, end=' ')
+            do_func.apply(node)
 
         if node.depth > depth:
             return
 
         for child in node.children:
-            NodeAlgorithms.print_by_depth(child, depth)
+            NodeAlgorithms.do_smth_by_depth(child, depth, do_func)
 
     @staticmethod
     def child_left_right_self(node: Node, do_func: NodeAbstractFunc):
