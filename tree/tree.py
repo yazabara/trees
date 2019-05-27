@@ -23,9 +23,12 @@ class Tree:
             raise NodeNofFoundException()
 
     def print_tree_by_depths(self):
-        print(self.__root)
+        print("----------------------------------------------------------------------------")
+        print("Tree with node size = {} and depth = {} ".format(self.__size, self.__depth))
+        print("Tree root: {}".format(self.__root))
         i = 1
         while i <= self.__depth:
             NodeAlgorithms.do_smth_by_depth(self.__root, i, NodeFunction(lambda node: print(node, end=' ')))
             print()
             i = i + 1
+        print("----------------------------------------------------------------------------")

@@ -35,7 +35,7 @@ class NodeAlgorithms:
         self node -> for each child in children [left -> right]
         :return: Node
         """
-        if not do_func:
+        if not do_func or not node:
             return
 
         if node.depth == depth:
