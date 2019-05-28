@@ -1,5 +1,8 @@
+from PyPDF2 import PageRange
+
 from tree.node.algorithms import NodeAlgorithms, NodeNofFoundException, NodeFunction
 from tree.node.node import Node
+from tree.pdf_merger import PdfMerger
 
 
 class Tree:
@@ -21,6 +24,42 @@ class Tree:
             return self
         else:
             raise NodeNofFoundException()
+
+    def build_pdf(self):
+        print("the result is {}".format(self.child_left_right_self(self.__root)))
+
+    @staticmethod
+    def child_left_right_self(node: Node):
+        if not node:
+            return None
+        if not node.children:
+            # return current one file url
+            return node.value.source
+
+        child_files = []
+        for child in node.children:
+            child_pdf = Tree.child_left_right_self(child)
+            if child_pdf:
+                child_files.append(child_pdf)
+
+        file_name = "file-{}".format(node.value.source)
+        child_pdfs = "file-{}-children".format(node.value.source)
+
+        if len(child_files) == 1:
+            child_pdfs = child_files[0]
+        else:
+            merger = PdfMerger()
+            for pdf in child_files:
+                merger.append(pdf, bookmark=pdf)
+            merger.write(child_pdfs)
+
+        merger = PdfMerger()
+        merger.append(node.value.source, bookmark='main')
+        merger.append(child_pdfs, pages=PageRange(':'), bookmark='children')
+        merger.write(file_name)
+        merger.close()
+
+        return file_name
 
     def print_tree_by_depths(self):
         print("----------------------------------------------------------------------------")
